@@ -50,10 +50,10 @@ module Phonie
 
     def self.default_named_formats
       {
-        default: "+%c%a%n",
-        default_with_extension: "+%c%a%nx%x",
-        europe: '+%c (0) %a %f %l',
-        us: "(%a) %f-%l"
+        :default => "+%c%a%n",
+        :default_with_extension => "+%c%a%nx%x",
+        :europe => '+%c (0) %a %f %l',
+        :us => "(%a) %f-%l"
       }
     end
   end
