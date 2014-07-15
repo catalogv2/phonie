@@ -78,24 +78,24 @@ module Phonie
       match = number.match(full_number_regex)
       return nil unless match
 
-      { area_code: match[2],
-        number:    match[-1] }
+      { :area_code => match[2],
+        :number =>    match[-1] }
     end
 
     def parse_area_code_match(number)
       match = number.match(area_code_number_regex)
       return nil unless match
 
-      { area_code: match[1],
-        number:    match[-1] }
+      { :area_code => match[1],
+        :number => match[-1] }
     end
 
     def parse_with_default(number, default_area_code)
       match = number.match(number_regex)
       return nil unless match
 
-      { area_code: default_area_code,
-        number:    match[1] }
+      { :area_code => default_area_code,
+        :number =>   match[1] }
     end
 
     def number_format_regex
