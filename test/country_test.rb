@@ -31,4 +31,19 @@ class CountryTest < Phonie::TestCase
     us_and_a = Phonie::Country.find_by_country_code('US')
     assert_equal '1', us_and_a.national_dialing_prefix
   end
+
+  def test_strict_validation
+    assert Phonie.configuration.strict_validation
+    assert_nil Phonie::Country.find_by_country_code('ID')
+
+    Phonie.configure do |config|
+      config.strict_validation = false
+    end
+    Phonie::Country.reload
+    assert indonesia = Phonie::Country.find_by_country_code('ID')
+    assert_equal '\d+', indonesia.parser.area_code
+
+    assert indonesia.is_valid_number?('+628342024961')
+    assert indonesia.possible_valid_number?('08342024961')
+  end
 end

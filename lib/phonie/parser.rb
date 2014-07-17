@@ -16,6 +16,7 @@ module Phonie
       @local_number_format = params[:local_number_format]
       @mobile_format       = params[:mobile_format]
       @number_format       = params[:number_format]
+      fill_empty_formats_with_wildcards unless Phonie.configuration.strict_validation
     end
 
     # Test if a phone +number+ might be for a mobile phone
@@ -54,7 +55,11 @@ module Phonie
 
     # Test that a parser is valid and is capable of parsing phone numbers
     def valid?
-      !!(country_code && area_code && local_number_format && number_format)
+      if Phonie.configuration.strict_validation
+        !!(country_code && area_code && local_number_format && number_format)
+      else
+        !!(country_code)
+      end
     end
 
     private
@@ -96,6 +101,12 @@ module Phonie
 
       { :area_code => default_area_code,
         :number =>   match[1] }
+    end
+
+    def fill_empty_formats_with_wildcards
+      @area_code ||= '\d+'
+      @local_number_format ||= '\d+'
+      @number_format ||= '\d+'
     end
 
     def number_format_regex

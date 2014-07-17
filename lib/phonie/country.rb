@@ -18,6 +18,9 @@ module Phonie
 
     def_delegators :parser, :is_mobile?, :possible_valid_number?,
 	                    :is_valid_number?, :parse
+    def self.reload
+      @@all = @@all_by_phone_code = @@all_by_country_name = @@all_by_name = nil
+    end
 
     def self.all
       @@all ||= begin

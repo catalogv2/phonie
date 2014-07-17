@@ -4,12 +4,13 @@ module Phonie
   class Configuration
     include Singleton
 
-    attr_accessor :data_file_path, :default_area_code, :default_country_code, :n1_length
+    attr_accessor :data_file_path, :default_area_code, :default_country_code, :n1_length, :strict_validation
 
     def initialize
       @data_file_path = File.join(File.dirname(__FILE__), 'data', 'phone_countries.yml')
       @n1_length = 3
       @named_formats = {}
+      @strict_validation = true
     end
 
     def add_custom_named_format(name, format_string)
